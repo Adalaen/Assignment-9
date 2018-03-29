@@ -37,7 +37,7 @@ public class MyController {
         return "redirect:/contact"; //redirect to homepage
     }
 
-    @RequestMapping(value = "/contact/remove/{name}", method = RequestMethod.GET)
+    @RequestMapping(value = "/contact/remove/?????", method = RequestMethod.GET)
     public String removeContact(String name, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "index";

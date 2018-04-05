@@ -1,6 +1,7 @@
 package edu.ldsbc.assignment9.controllers;
 
 import edu.ldsbc.assignment9.models.Contact;
+import edu.ldsbc.assignment9.models.QueueData;
 import edu.ldsbc.assignment9.services.MyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,32 +19,64 @@ public class MyController {
     MyService service;
 
     //home page
-    @RequestMapping(value = "/contact", method = RequestMethod.GET)
-    public String index(Model model)
+    @RequestMapping(value = "/home", method = RequestMethod.GET)
+    public String index()
     {
-        List<Contact>  contacts = service.getContacts();
-        model.addAttribute("names", contacts); //data on page
         return "index"; // index is the page name
     }
 
-    //     add new contact
-    @RequestMapping(value = "/contact/new", method = RequestMethod.POST)
-    public String addNewPost(Contact contact, BindingResult bindingResult) {
+    //home page
+    @RequestMapping(value = "/queue", method = RequestMethod.GET)
+    public String indexQueue(Model model)
+    {
+        List<String> list = service.viewItmesInQueue();
+        model.addAttribute("queueItmes", list);
+        return "queue"; // queue is the page name
+    }
+
+    //add new contact
+    @RequestMapping(value = "/addToQueue", method = RequestMethod.POST)
+    public String addItemToQueue(QueueData data, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return "index";
+            return "queue";
+        }
+        service.parseAndAddToQueue(data);
+
+        return "redirect:/queue"; //redirect to homepage
+    }
+
+    //
+    //
+    //
+
+    //contact page
+    @RequestMapping(value = "/contact", method = RequestMethod.GET)
+    public String indexContact(Model model)
+    {
+        List<Contact>  contacts = service.getContacts();
+        model.addAttribute("names", contacts); //data on page
+        return "contacts"; // contacts is the page name
+    }
+
+    //add new contact
+    @RequestMapping(value = "/contact/new", method = RequestMethod.POST)
+    public String addContact(Contact contact, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "contacts";
         }
         service.addContact(contact);
 
         return "redirect:/contact"; //redirect to homepage
     }
 
+    //remove contact(Not working)
     @RequestMapping(value = "/contact/remove/???", method = RequestMethod.GET)
     public String removeContact(String name, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return "index";
+            return "contacts";
         }
         //service.removeContact(name);
 
-        return "redirect:/adalaen"; //redirect to homepage
+        return "redirect:/contact"; //redirect to homepage
     }
 }

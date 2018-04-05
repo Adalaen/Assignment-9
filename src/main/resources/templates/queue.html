@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Assignment 10</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container">
+    <h3>Assignment 10
+        <small>CS 115</small>
+    </h3>
+
+    <td><a href="/home">Home</a></td>
+    <td><a href="/queue">Queue</a></td>
+    <td><a href="/contact">Contact</a></td>
+
+    <table class="table  table-bordered">
+        <tr>
+            <th>Items from queue</th>
+        </tr>
+        <tr th:each="item : ${queueItmes}">
+            <td th:text="${item}"></td>
+        </tr>
+    </table>
+</div>
+
+<div class="container">
+    <h3>Enter Test Data
+    </h3>
+
+    <form action="/addToQueue" method="post">
+        <div class="form-group">
+            <label for="itemForQueue">Items for Queue</label>
+            <input type="text" class="form-control" name="itemForQueue" id="itemForQueue">
+        </div>
+
+        <button type="submit" class="btn btn-default">Submit</button>
+    </form>
+</div>
+</body>
+</html>

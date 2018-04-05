@@ -7,6 +7,7 @@ import java.util.List;
 public class DataRepo {
 
     private List<Contact> contactList = new ArrayList<>();
+    private List<Integer> queue = new ArrayList<>();
 
     private static DataRepo ourInstance = new DataRepo();
 
@@ -28,4 +29,11 @@ public class DataRepo {
         contactList.add(contact);
     }
 
+    public void addToQueue(String item){
+        queue.add(Integer.parseInt(item));
+    }
+
+    public List<Integer> getQueue() {
+        return queue;
+    }
 }
